@@ -1,0 +1,28 @@
+//74. Search a 2D Matrix
+
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        
+        int noOfRows=matrix.size();//3
+        int noOfCol=matrix[0].size();//4
+        
+        int low=0;  //0th index
+        int high=noOfRows*noOfCol-1; // 11th index acc to series
+        
+        while(low<=high){
+             int mid=low+(high-low)/2; //mid term
+             int index=matrix[mid/noOfCol][mid%noOfCol];//index row-col e,g->1,1
+            
+            if(index==target){
+                return true;
+            }else if(index<target){
+                low=mid+1;
+            }else{
+                high=mid-1;
+            }
+        }
+        return false;
+        
+    }
+};
