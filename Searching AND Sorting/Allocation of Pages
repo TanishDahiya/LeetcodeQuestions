@@ -1,0 +1,111 @@
+#Allocation of Pages
+
+#EXAMPLE 1 WHEN STUDENT IS 2
+[20,10,30,40]  noOfStudents=2   
+ 0  1  2  3
+#Rules-->at least one book to each student
+         allocation should be continuous similar like subarray
+         unbreakable items 
+         
+#DISTRIBUTIONS
+1st-> m1=20,  m2=10+30+40=80
+2nd-> m1=20+10=30,  m2=30+40=70
+3rd-> m1=20+10+30=60,  m2=40
+
+#Pressure gain by student for reading many pages(or Highest pages reading load)
+1st->m2=80
+2nd->m2=70
+3rd->m1=60
+
+we selected the minimum distribution of all those loads and that is 3rd->m1=60   
+
+#EXAMPLE 2 WHEN STUDENT IS 3
+[20,10,30,40]  noOfStudents=3
+ 0  1  2  3
+ 
+#DISTRIBUTIONS
+1st-> m1=20,  m2=10  m3=30+40=70
+2nd-> m1=20  m2=30+10=40  m3=40
+3rd-> m1=20+10=30  m2=30,  m3=40
+
+#Pressure gain by student for reading many pages(or Highest pages reading load)
+1st->m3=70
+2nd->m2=40 or m3=40
+3rd->m3=40
+
+we selected the minimum distribution of all those loads and that is 2nd or 3rd-> that is 40
+
+
+#EXAMPLE 3 WHEN IN THIS CASE M=4
+SO DISTRIBUTION IS ONLY 1
+m1=20,m2=10,m3=30,m4=40
+so the load is 40 in this case
+
+---->the lowest possible answer is maximum of array in this case that is 40
+
+so the thing is our ans is b/w low and high
+low=40
+high=100(all sum) //this is when m=1 we are just setting the range
+
+
+mid=100+40/2=70 //this means one student is reading 70 pages that is the max load we check distribution of 70 pages load is distribution possible or not
+
+
+
+
+
+
+#include <iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+bool isPossible(vector<int>& arr, int mid, int m){
+    int student=1;
+    int sum=0;
+    
+    for(int i=0;i<arr.size();i++){
+        sum+=arr[i];
+        if(sum>mid){
+            student++;
+            sum=arr[i];
+        }
+    }
+    return student<=m;
+}
+
+int minPages(vector<int>& arr,int m){
+    int sum=0;
+    int maxi=0;
+    
+    for(auto val:arr){
+        sum+=val;
+       // max=Math.max(max,val);
+        maxi=max(maxi,val);
+    }
+    int low=maxi;
+    int high=sum;
+    
+    int ans=0;
+    
+    while(low<=high){
+        int mid=low+(high-mid)/2;
+        if(isPossible(arr,mid,m)==true){
+            ans=mid;
+            high=mid-1;
+        }else{
+            low=mid+1;
+        }
+    }
+    return ans;
+}
+
+int main() {
+	// your code goes here
+   vector<int> vect{ 20, 10, 30 ,40};
+	int m;
+	cin>>m;
+	int ans=minPages(vect,m);
+	cout<<ans;
+	return 0;
+}
