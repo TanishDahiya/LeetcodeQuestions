@@ -1,0 +1,44 @@
+//42. Trapping Rain Water
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        
+        //first approach--> linear traversal or brute force
+        //second-->with prefix and suffix array 
+        //third 4 pointer approach
+        
+        int n=height.size();
+        int maxLeft=0;
+        int maxRight=0;
+        int res=0;
+        int left=0;
+        int right=n-1;
+     
+        while(left<=right){
+     
+            if(height[left]<=height[right]){
+                
+                if(height[left]>=maxLeft){
+                    maxLeft=height[left];
+                }
+                else{
+                    res+=maxLeft-height[left];
+                }
+                left++;
+                
+            }
+            else{
+                if(height[right]>=maxRight){
+                    maxRight=height[right];
+                }
+                else{
+                    res+=maxRight-height[right];
+                }
+                right--;
+            }
+        }
+        return res;
+        
+    }
+};
