@@ -1,0 +1,41 @@
+//1046. Last Stone Weight
+
+class Solution {
+public:
+    int lastStoneWeight(vector<int>& s) {
+    
+    while(s.size()>1){
+        //first convert vector to heap
+        make_heap(s.begin(),s.end());
+        
+        //store largest 1st element
+        int x=s.front();
+        //rerrange for popping the largest element
+        pop_heap(s.begin(),s.end());
+        //pop the largest element
+        s.pop_back();
+        
+        //same do with second largest element
+        //store largest 2nd element
+        int y=s.front();
+        //rerrange for popping the largest element
+        pop_heap(s.begin(),s.end());
+        //pop the largest element
+        s.pop_back();
+        
+        //check if both first and last equal or not if equal both are destroyed we
+        //will continue this loop
+        if(x==y) continue;
+        
+        //pushback the element with subtract x and y
+        s.push_back(abs(x-y));
+        
+       // rerrange the heap with push_heap
+        push_heap(s.begin(),s.end());
+        
+    }
+        //if size is not empty return max, if not return 0
+        return s.size()?s.front():0;
+        
+    }
+};
