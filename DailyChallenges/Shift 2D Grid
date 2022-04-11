@@ -1,0 +1,19 @@
+//1260. Shift 2D Grid
+
+class Solution {
+public:
+    vector<vector<int>> shiftGrid(vector<vector<int>>& grid, int k) {
+        
+        int row=grid.size();
+        int col=grid[0].size();
+        vector<vector<int>> ans(row,vector<int>(col,0));
+        
+        for(int i=0;i<row;i++){
+            for(int j=0;j<grid[i].size();j++){
+                ans[(i+(j+k)/grid[i].size())%row] [(j+k)%grid[i].size()]=grid[i][j];
+            }
+        }
+        return ans;
+        
+    }
+};
